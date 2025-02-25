@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { config } from 'dotenv';
 import { exec } from 'child_process';
 import OpenAI from 'openai';
@@ -25,7 +27,7 @@ if (!userInput) {
 function confirmExecution(command: string) {
   const rl = readline.createInterface({
     input: process.stdin,
-    output: process.stdout
+    output: process.stdout,
   });
 
   rl.question(`\nRun this command? [y/N]: ${command} `, (answer) => {
@@ -60,11 +62,10 @@ async function processCommand(input: string) {
     messages: [
       {
         role: 'system',
-        content:
-          "Convert the user's request into a shell command without explanation."
+        content: "Convert the user's request into a shell command without explanation.",
       },
-      { role: 'user', content: input }
-    ]
+      { role: 'user', content: input },
+    ],
   });
 
   const command = response.choices[0]?.message?.content?.trim();
