@@ -2,12 +2,6 @@
 
 A command-line interface tool that converts natural language instructions into shell commands using OpenAI's GPT-4.
 
-## Installation
-
-```bash
-pnpm add -g zzk
-```
-
 ## Prerequisites
 
 Before using this tool, you need to:
@@ -51,7 +45,7 @@ To set up the development environment:
 
 ```bash
 # Clone the repository
-git clone [your-repo-url]
+git clone https://github.com/matyik/zzk.git
 
 # Install dependencies
 pnpm install
