@@ -1,4 +1,4 @@
-# zzk
+# vvk
 
 A command-line interface tool that converts natural language instructions into shell commands using OpenAI's GPT-4.
 
@@ -16,20 +16,20 @@ OPENAI_API_KEY=your_api_key_here
 ## Usage
 
 ```bash
-zzk <your natural language command>
+vvk <your natural language command>
 ```
 
 ### Examples
 
 ```bash
 # List all files in the current directory
-zzk show me all files in this folder
+vvk show me all files in this folder
 
 # Find large files
-zzk find files larger than 100MB
+vvk find files larger than 100MB
 
 # Search for text in files
-zzk search for "hello world" in all javascript files
+vvk search for "hello world" in all javascript files
 ```
 
 The tool will:
@@ -45,7 +45,7 @@ To set up the development environment:
 
 ```bash
 # Clone the repository
-git clone https://github.com/matyik/zzk.git
+git clone https://github.com/matyik/vvk.git
 
 # Install dependencies
 pnpm install
@@ -57,7 +57,7 @@ pnpm build
 pnpm link --global
 
 # Now you can use the development version globally
-zzk <command>
+vvk <command>
 ```
 
 ## License

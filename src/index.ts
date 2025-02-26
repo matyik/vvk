@@ -19,7 +19,7 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 const userInput = process.argv.slice(2).join(' ');
 
 if (!userInput) {
-  console.log('Usage: ai-cli <your natural language command>');
+  console.log('Usage: vvk <your natural language command>');
   process.exit(1);
 }
 
