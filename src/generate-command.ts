@@ -1,8 +1,5 @@
 import OpenAI from 'openai';
-import { config } from 'dotenv';
 import { loadConfig } from './config';
-
-config();
 
 export async function generateCommand(input: string) {
   const { openaiApiKey } = loadConfig();
@@ -15,7 +12,7 @@ export async function generateCommand(input: string) {
   const openai = new OpenAI({ apiKey: openaiApiKey });
 
   const response = await openai.chat.completions.create({
-    model: 'gpt-4-turbo',
+    model: 'gpt-3.5-turbo',
     messages: [
       {
         role: 'system',
