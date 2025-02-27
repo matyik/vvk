@@ -1,22 +1,20 @@
 #!/usr/bin/env node
 
-import { config } from 'dotenv';
 import { exec } from 'child_process';
-import OpenAI from 'openai';
 import readline from 'readline';
+import { generateCommand } from './generate-command';
+import { loadConfig } from './config';
+import { configCommand } from './config-command';
 
-// Load environment variables from .env
-config();
-
-if (!process.env.OPENAI_API_KEY) {
-  console.error('Error: Missing OpenAI API key. Set OPENAI_API_KEY in .env');
-  process.exit(1);
-}
-
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const config = loadConfig();
 
 // Get command from CLI arguments
-const userInput = process.argv.slice(2).join(' ');
+const args = process.argv.slice(2);
+const userInput = args.join(' ');
+
+if (args[0] === 'config') {
+  configCommand(args);
+}
 
 if (!userInput) {
   console.log('Usage: vvk <your natural language command>');
@@ -25,14 +23,38 @@ if (!userInput) {
 
 // Function to prompt for confirmation
 function confirmExecution(command: string) {
+  // If confirmation is disabled, use the default confirmation setting
+  if (!config.confirmCommand) {
+    if (config.defaultConfirmation.toLowerCase() === 'y') {
+      executeCommand(command);
+    } else {
+      console.log('Command execution canceled based on configuration.');
+      process.exit(0);
+    }
+    return;
+  }
+
+  // Otherwise, prompt the user
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
   });
 
-  rl.question(`\nRun this command? [y/N]: ${command} `, (answer) => {
+  // Build the prompt with a default hint (Y/n or y/N)
+  const promptDefault = config.defaultConfirmation.toLowerCase() === 'y' ? 'Y/n' : 'y/N';
+
+  rl.question(`\nRun this command? [${promptDefault}]: ${command} `, (answer) => {
     rl.close();
-    if (answer.toLowerCase() === 'y') {
+    const normalized = answer.trim().toLowerCase();
+    // If the user presses enter, use the default option
+    if (normalized === '') {
+      if (config.defaultConfirmation.toLowerCase() === 'y') {
+        executeCommand(command);
+      } else {
+        console.log('Command execution canceled based on default configuration.');
+        process.exit(0);
+      }
+    } else if (normalized === 'y') {
       executeCommand(command);
     } else {
       console.log('Command execution canceled.');
@@ -57,23 +79,7 @@ function executeCommand(command: string) {
 async function processCommand(input: string) {
   console.log(`Thinking...`);
 
-  const response = await openai.chat.completions.create({
-    model: 'gpt-4-turbo',
-    messages: [
-      {
-        role: 'system',
-        content: "Convert the user's request into a shell command without explanation.",
-      },
-      { role: 'user', content: input },
-    ],
-  });
-
-  const command = response.choices[0]?.message?.content?.trim();
-
-  if (!command) {
-    console.log("Couldn't generate a command.");
-    process.exit(1);
-  }
+  const command = await generateCommand(input);
 
   confirmExecution(command);
 }

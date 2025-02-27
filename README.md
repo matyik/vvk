@@ -1,25 +1,41 @@
-# vvk
+# **vvk**
 
 A command-line interface tool that converts natural language instructions into shell commands using OpenAI's GPT-4.
 
-## Prerequisites
+## **Prerequisites**
 
-Before using this tool, you need to:
+Before using this tool, you need to configure your API key and preferences.
 
-1. Have an OpenAI API key
-2. Create a `.env` file in your project root with:
+### **Setup Configuration**
+
+Use the `vvk config set` command to configure your settings:
 
 ```bash
-OPENAI_API_KEY=your_api_key_here
+# Set your OpenAI API key
+vvk config set openaiApiKey your_api_key_here
+
+# Enable or disable command confirmation (default: true)
+vvk config set confirmCommand true
+
+# Set default confirmation behavior (y/n)
+vvk config set defaultConfirmation y
 ```
 
-## Usage
+You can check your current settings with:
+
+```bash
+vvk config list
+```
+
+## **Usage**
+
+Run commands using natural language:
 
 ```bash
 vvk <your natural language command>
 ```
 
-### Examples
+### **Examples**
 
 ```bash
 # List all files in the current directory
@@ -36,10 +52,10 @@ The tool will:
 
 1. Process your natural language input
 2. Generate an appropriate shell command
-3. Show you the command for confirmation
+3. Show you the command for confirmation (if enabled)
 4. Execute the command upon your approval
 
-## Development
+## **Development**
 
 To set up the development environment:
 
@@ -60,10 +76,10 @@ pnpm link --global
 vvk <command>
 ```
 
-## License
+## **License**
 
 MIT License - see LICENSE file for details
 
-## Contributing
+## **Contributing**
 
 Contributions are welcome! Please feel free to submit a Pull Request.
