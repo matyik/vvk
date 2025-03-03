@@ -1,12 +1,33 @@
 # **vvk**
 
-A command-line interface tool that converts natural language instructions into shell commands using OpenAI's GPT-3.5-Turbo.
+A command-line interface tool that converts natural language instructions into shell commands using OpenAI's GPT-4.
 
 ## **Prerequisites**
 
 Before using this tool, you need to configure your API key and preferences.
 Get an OpenAI API key at https://platform.openai.com/api-keys
 Alternatively, sign up for VVK Cloud at https://vvk.ai/
+
+## **Development**
+
+To set up the development environment:
+
+```bash
+# Clone the repository
+git clone https://github.com/matyik/vvk.git
+
+# Install dependencies
+pnpm install
+
+# Build the project
+pnpm build
+
+# Create a global link
+pnpm link --global
+
+# Now you can use the development version globally
+vvk <command>
+```
 
 ### **Setup Configuration**
 
@@ -56,27 +77,6 @@ The tool will:
 2. Generate an appropriate shell command
 3. Show you the command for confirmation (if enabled)
 4. Execute the command upon your approval
-
-## **Development**
-
-To set up the development environment:
-
-```bash
-# Clone the repository
-git clone https://github.com/matyik/vvk.git
-
-# Install dependencies
-pnpm install
-
-# Build the project
-pnpm build
-
-# Create a global link
-pnpm link --global
-
-# Now you can use the development version globally
-vvk <command>
-```
 
 ## **License**
 
