@@ -12,11 +12,12 @@ export async function generateCommand(input: string) {
   const openai = new OpenAI({ apiKey: openaiApiKey });
 
   const response = await openai.chat.completions.create({
-    model: 'gpt-3.5-turbo',
+    model: 'gpt-4-turbo',
     messages: [
       {
         role: 'system',
-        content: "Convert the user's request into a shell command without explanation.",
+        content:
+          "Convert the user's request into a shell command without explanation. Give only the command on a single line, no other text. Do not format in any way. If the user's request requires multiple commands, return them in the same line separated by the && operator.",
       },
       { role: 'user', content: input },
     ],

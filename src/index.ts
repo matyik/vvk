@@ -16,6 +16,10 @@ if (args[0] === 'config') {
   configCommand(args);
 }
 
+if ((args[0] === '--version' || args[0] === '-v') && args.length === 1) {
+  console.log('1.0.0');
+  process.exit(0);
+}
 if (!userInput) {
   console.log('Usage: vvk <your natural language command>');
   process.exit(1);
