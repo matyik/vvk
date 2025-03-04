@@ -29,7 +29,7 @@ if (args[0] === 'config') {
   `);
   process.exit(0);
 } else if ((args[0] === '--version' || args[0] === '-v') && args.length === 1) {
-  console.log('1.0.0');
+  console.log('1.1.0');
 } else if (args[0] === 'login' && args.length === 1) {
   login();
 } else if (args[0] === 'logout' && args.length === 1) {

@@ -50,6 +50,21 @@ You can check your current settings with:
 vvk config list
 ```
 
+### **Login**
+
+Use the `vvk login` command to log in in the browser:
+
+```bash
+# Sets the key and userId values
+vvk login
+```
+
+You can log out with:
+
+```bash
+vvk logout
+```
+
 ## **Usage**
 
 Run commands using natural language:
