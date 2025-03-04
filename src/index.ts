@@ -1,10 +1,14 @@
 #!/usr/bin/env node
 
+// remove warnings in console
+process.removeAllListeners('warning');
+
 import { exec } from 'child_process';
 import readline from 'readline';
 import { generateCommand } from './generate-command';
 import { loadConfig } from './config';
 import { configCommand } from './config-command';
+import { login, logout } from './login';
 
 const config = loadConfig();
 
@@ -14,15 +18,29 @@ const userInput = args.join(' ');
 
 if (args[0] === 'config') {
   configCommand(args);
-}
-
-if ((args[0] === '--version' || args[0] === '-v') && args.length === 1) {
-  console.log('1.0.0');
+} else if (args[0] === 'help' && args.length === 1) {
+  console.log(`
+    Available commands:
+      vvk <command>      : Generate and execute a command
+      vvk config set ... : Set configuration options
+      vvk login          : Log in to your account
+      vvk logout         : Log out of your account
+      vvk --version      : Show version
+  `);
   process.exit(0);
-}
-if (!userInput) {
-  console.log('Usage: vvk <your natural language command>');
-  process.exit(1);
+} else if ((args[0] === '--version' || args[0] === '-v') && args.length === 1) {
+  console.log('1.0.0');
+} else if (args[0] === 'login' && args.length === 1) {
+  login();
+} else if (args[0] === 'logout' && args.length === 1) {
+  logout();
+} else {
+  if (!userInput) {
+    console.log('Usage: vvk <your natural language command>');
+    process.exit(1);
+  }
+
+  processCommand(userInput);
 }
 
 // Function to prompt for confirmation
@@ -87,5 +105,3 @@ async function processCommand(input: string) {
 
   confirmExecution(command);
 }
-
-processCommand(userInput);

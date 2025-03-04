@@ -4,12 +4,16 @@ import os from 'os';
 
 export interface Config {
   openaiApiKey: string;
+  userId: string;
+  key: string;
   confirmCommand: boolean;
   defaultConfirmation: 'y' | 'n';
 }
 
 const DEFAULT_CONFIG: Config = {
   openaiApiKey: '',
+  userId: '',
+  key: '',
   confirmCommand: true,
   defaultConfirmation: 'y',
 };

@@ -17,14 +17,14 @@ export function configCommand(args: string[]) {
     }
     const updated = updateConfig({ [key]: parsedValue });
     console.log('Configuration updated:', updated);
-  } else if (command === 'get') {
-    const config = loadConfig();
-    console.log('Current configuration:', config);
-  } else if (command === 'list') {
-    const config = loadConfig();
+  } else if (command === 'get' || command === 'list') {
+    let config = loadConfig();
+    if (config.key && config.key.length > 0) {
+      config.key = '********';
+    }
     console.log('Current configuration:', config);
   } else {
-    console.error('Unknown config command. Use "set" or "get".');
+    console.error('Unknown config command. Use "set" or "list".');
   }
   process.exit(0);
 }
