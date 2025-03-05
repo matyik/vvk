@@ -8,28 +8,62 @@ Before using this tool, you need to configure your API key and preferences.
 Get an OpenAI API key at https://platform.openai.com/api-keys
 Alternatively, sign up for VVK Cloud at https://vvk.ai/
 
-## **Development**
+## Installation
 
-To set up the development environment:
+### Prerequisites
+
+- Node.js 18+  
+  Verify with:
+  ```bash
+  node --version
+  ```
+
+### Install as a Global CLI Tool
 
 ```bash
-# Clone the repository
-git clone https://github.com/matyik/vvk.git
+# Using npm
+npm install -g vvk
 
-# Install dependencies
-pnpm install
+# Using pnpm
+pnpm add -g vvk
 
-# Build the project
-pnpm build
-
-# Create a global link
-pnpm link --global
-
-# Now you can use the development version globally
-vvk <command>
+# Using yarn
+yarn global add vvk
 ```
 
-### **Setup Configuration**
+### Verify Installation
+
+```bash
+vvk --version
+```
+
+### Update
+
+```bash
+npm update -g vvk
+# or
+pnpm update -g vvk
+```
+
+### Uninstall
+
+```bash
+npm uninstall -g vvk
+# or
+pnpm remove -g vvk
+```
+
+### Troubleshooting
+
+- **Permission Errors**: Use `sudo` (not recommended) or fix npm permissions:
+  ```bash
+  # Reset npm permissions
+  npm config set prefix ~/.npm-global
+  echo 'export PATH="$PATH:$HOME/.npm-global/bin"' >> ~/.bashrc
+  source ~/.bashrc
+  ```
+
+## **Setup Configuration**
 
 Use the `vvk config set` command to configure your settings:
 
@@ -50,7 +84,7 @@ You can check your current settings with:
 vvk config list
 ```
 
-### **Login**
+## **Login**
 
 Use the `vvk login` command to log in in the browser:
 
@@ -92,6 +126,27 @@ The tool will:
 2. Generate an appropriate shell command
 3. Show you the command for confirmation (if enabled)
 4. Execute the command upon your approval
+
+## **Development**
+
+To set up the development environment:
+
+```bash
+# Clone the repository
+git clone https://github.com/matyik/vvk.git
+
+# Install dependencies
+pnpm install
+
+# Build the project
+pnpm build
+
+# Create a global link
+pnpm link --global
+
+# Now you can use the development version globally
+vvk <command>
+```
 
 ## **License**
 
