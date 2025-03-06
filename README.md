@@ -68,7 +68,7 @@ pnpm remove -g vvk
 Use the `vvk config set` command to configure your settings:
 
 ```bash
-# Set your OpenAI API key
+# If using your own Openai API key, set it in the config
 vvk config set openaiApiKey your_api_key_here
 
 # Enable or disable command confirmation (default: true)
@@ -86,7 +86,7 @@ vvk config list
 
 ## **Login**
 
-Use the `vvk login` command to log in in the browser:
+If using VVK Cloud, use the `vvk login` command to log in through the browser
 
 ```bash
 # Sets the key and userId values

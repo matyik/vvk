@@ -1,10 +1,13 @@
 {
   "name": "vvk",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A command-line interface tool that converts natural language instructions into shell commands using OpenAI's GPT-4.",
   "main": "dist/index.js",
   "scripts": {
-    "build": "rimraf dist && webpack"
+    "build": "rimraf dist && webpack",
+    "lint": "eslint src/**",
+    "lint:fix": "eslint src/** --fix",
+    "prepare": "husky"
   },
   "bin": {
     "vvk": "dist/index.js"
@@ -15,19 +18,29 @@
     "LICENSE"
   ],
   "keywords": [],
-  "author": "Matyi Kari",
+  "author": "Matyi Kari <matykari@gmail.com>",
   "license": "MIT",
+  "homepage": "https://vvk.ai",
+  "bugs": {
+    "url": "https://github.com/matyik/vvk/issues",
+    "email": "matykari@gmail.com"
+  },
   "devDependencies": {
-    "@types/node": "^22.13.5",
+    "@eslint/js": "^9.21.0",
+    "@types/node": "^22.13.9",
+    "eslint": "^9.21.0",
+    "globals": "^16.0.0",
+    "husky": "^9.1.7",
     "rimraf": "^6.0.1",
     "ts-loader": "^9.5.2",
     "ts-node": "^10.9.2",
-    "typescript": "^5.7.3",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.26.0",
     "webpack": "^5.98.0",
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
     "axios": "^1.8.1",
-    "openai": "^4.85.4"
+    "openai": "^4.86.2"
   }
 }

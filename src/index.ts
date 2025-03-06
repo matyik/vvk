@@ -29,7 +29,7 @@ if (args[0] === 'config') {
   `);
   process.exit(0);
 } else if ((args[0] === '--version' || args[0] === '-v') && args.length === 1) {
-  console.log('1.1.1');
+  console.log('1.1.2');
 } else if (args[0] === 'login' && args.length === 1) {
   login();
 } else if (args[0] === 'logout' && args.length === 1) {
@@ -78,6 +78,7 @@ function confirmExecution(command: string) {
       }
     } else if (normalized === 'y') {
       executeCommand(command);
+      process.exit(0);
     } else {
       console.log('Command execution canceled.');
       process.exit(0);

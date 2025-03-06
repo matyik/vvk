@@ -11,14 +11,14 @@ export function configCommand(args: string[]) {
       process.exit(1);
     }
     // For boolean fields, parse the value
-    let parsedValue: any = value;
+    let parsedValue: string | boolean = value;
     if (key === 'confirmCommand') {
       parsedValue = value.toLowerCase() === 'true' || value.toLowerCase() === 'y';
     }
     const updated = updateConfig({ [key]: parsedValue });
     console.log('Configuration updated:', updated);
   } else if (command === 'get' || command === 'list') {
-    let config = loadConfig();
+    const config = loadConfig();
     if (config.key && config.key.length > 0) {
       config.key = '********';
     }

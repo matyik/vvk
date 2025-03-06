@@ -5,3 +5,5 @@ dist
 *.exe
 *.pkg
 *.blob
+pkg-root
+uninstall-scripts

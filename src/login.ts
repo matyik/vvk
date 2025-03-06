@@ -43,7 +43,7 @@ export async function login() {
         key = data.key;
         userId = data.userId;
       }
-    } catch (err) {
+    } catch {
       // Ignore errors while waiting
     }
   }
@@ -59,8 +59,12 @@ export async function logout() {
     updateConfig({ key: '', userId: '' });
     console.log('✅ Logged out successfully!');
     process.exit(0);
-  } catch (err: any) {
-    console.error('❌ Error during logout:', err.message);
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.error('❌ Error during logout:', err.message);
+    } else {
+      console.error('❌ Error during logout:', err);
+    }
     process.exit(1);
   }
 }
