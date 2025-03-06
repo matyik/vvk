@@ -16,6 +16,9 @@ export function configCommand(args: string[]) {
       parsedValue = value.toLowerCase() === 'true' || value.toLowerCase() === 'y';
     }
     const updated = updateConfig({ [key]: parsedValue });
+    if (updated.key && updated.key.length > 0) {
+      updated.key = '********';
+    }
     console.log('Configuration updated:', updated);
   } else if (command === 'get' || command === 'list') {
     const config = loadConfig();
@@ -23,8 +26,22 @@ export function configCommand(args: string[]) {
       config.key = '********';
     }
     console.log('Current configuration:', config);
+  } else if (command === 'remove' || command === 'rm') {
+    // set key to an empty string
+
+    const key = args[2] as keyof Config;
+    if (key === 'confirmCommand' || key === 'defaultConfirmation') {
+      console.error(`Cannot remove ${key}`);
+      process.exit(1);
+    }
+
+    const updated = updateConfig({ [key]: '' });
+    if (updated.key && updated.key.length > 0) {
+      updated.key = '********';
+    }
+    console.log('Configuration updated:', updated);
   } else {
-    console.error('Unknown config command. Use "set" or "list".');
+    console.error('Unknown config command. Use "set", "remove", or "list".');
   }
   process.exit(0);
 }

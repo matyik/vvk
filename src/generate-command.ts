@@ -16,7 +16,7 @@ export async function generateCommand(input: string) {
         {
           role: 'system',
           content:
-            "Convert the user's request into a shell command without explanation. Give only the command on a single line, no other text. Do not format in any way. If the user's request requires multiple commands, return them in the same line separated by the && operator.",
+            "Convert the user's request into a shell command without explanation. Give only the command on a single line, no other text. Do not format in any way. If the user's request requires multiple commands, return them in the same line separated by the && operator. If you cannot generate a command, return only the string 'VVKERROR' and nothing else.",
         },
         { role: 'user', content: input },
       ],
@@ -24,21 +24,30 @@ export async function generateCommand(input: string) {
 
     command = response.choices[0]?.message?.content?.trim();
   } else if (key?.length > 1 && userId?.length > 1) {
-    const response = await axios.post('https://vvk.ai/api/command', {
-      input,
-      key,
-      userId,
-    });
+    let response;
+    try {
+      response = await axios.post('https://vvk.ai/api/command', {
+        input,
+        key,
+        userId,
+      });
 
-    command = response.data.command;
+      command = await response?.data?.command;
+    } catch (err) {
+      if (err instanceof Error && err.message.includes('401')) {
+        // 401 error
+        console.error('❌ Error authenticating. Try running vvk login again.');
+      }
+      process.exit(1);
+    }
   } else {
-    console.log(
+    console.error(
       "Couldn't generage command: Set your OpenAI API Key with vvk config set openaiApiKey <your_api_key> or log in with vvk login"
     );
     process.exit(1);
   }
-  if (!command) {
-    console.log("Couldn't generate a command.");
+  if (!command || command === 'VVKERROR') {
+    console.error("Couldn't generate a command.");
     process.exit(1);
   }
 
