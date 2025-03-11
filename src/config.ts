@@ -8,6 +8,9 @@ export interface Config {
   key: string;
   confirmCommand: boolean;
   defaultConfirmation: 'y' | 'n';
+  useOllama: boolean;
+  ollamaHost: string;
+  ollamaModel: string;
 }
 
 const DEFAULT_CONFIG: Config = {
@@ -16,6 +19,9 @@ const DEFAULT_CONFIG: Config = {
   key: '',
   confirmCommand: true,
   defaultConfirmation: 'y',
+  useOllama: false,
+  ollamaHost: 'http://localhost:11434',
+  ollamaModel: 'llama3.1:latest',
 };
 
 const CONFIG_FILE_PATH = path.join(os.homedir(), '.vvk-config.json');
@@ -24,9 +30,20 @@ export function loadConfig(): Config {
   if (fs.existsSync(CONFIG_FILE_PATH)) {
     try {
       const rawData = fs.readFileSync(CONFIG_FILE_PATH, 'utf-8');
-      return { ...DEFAULT_CONFIG, ...JSON.parse(rawData) };
+      const existingConfig = JSON.parse(rawData);
+
+      // Ensure all default config properties exist in the loaded config
+      const mergedConfig = { ...DEFAULT_CONFIG, ...existingConfig };
+
+      // If the config file is missing any of the new Ollama fields, update it
+      if (!('useOllama' in existingConfig) || !('ollamaHost' in existingConfig) || !('ollamaModel' in existingConfig)) {
+        saveConfig(mergedConfig);
+      }
+
+      return mergedConfig;
     } catch (error) {
       console.error('Error parsing config, reverting to defaults.', error);
+      saveConfig(DEFAULT_CONFIG);
       return DEFAULT_CONFIG;
     }
   } else {

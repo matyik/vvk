@@ -3,11 +3,29 @@ import { loadConfig } from './config';
 import axios from 'axios';
 
 export async function generateCommand(input: string) {
-  const { openaiApiKey, key, userId } = loadConfig();
+  const { openaiApiKey, key, userId, useOllama, ollamaHost, ollamaModel } = loadConfig();
 
   let command;
 
-  if (openaiApiKey && openaiApiKey.length > 1) {
+  if (useOllama) {
+    try {
+      const response = await axios.post(`${ollamaHost}/api/generate`, {
+        model: ollamaModel,
+        prompt: `Convert the following request into a shell command without explanation. Give only the command on a single line, no other text. Do not format in any way. If the request requires multiple commands, return them in the same line separated by the && operator. If you cannot generate a command, return only the string 'VVKERROR' and nothing else.\n\nRequest: ${input}`,
+        stream: false,
+      });
+
+      command = response.data.response.trim();
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error('❌ Error connecting to Ollama:', err.message);
+      } else {
+        console.error('❌ Error connecting to Ollama:', String(err));
+      }
+      console.error('Make sure Ollama is running and accessible at', ollamaHost);
+      process.exit(1);
+    }
+  } else if (openaiApiKey && openaiApiKey.length > 1) {
     const openai = new OpenAI({ apiKey: openaiApiKey });
 
     const response = await openai.chat.completions.create({
@@ -42,7 +60,7 @@ export async function generateCommand(input: string) {
     }
   } else {
     console.error(
-      "Couldn't generage command: Set your OpenAI API Key with vvk config set openaiApiKey <your_api_key> or log in with vvk login"
+      "Couldn't generate command: Set your OpenAI API Key with vvk config set openaiApiKey <your_api_key>, log in with vvk login, or enable Ollama with vvk config set useOllama true"
     );
     process.exit(1);
   }
