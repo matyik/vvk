@@ -6,4 +6,8 @@ dist
 *.pkg
 *.blob
 pkg-root
+*.tgz
 uninstall-scripts
+.pnpm-lock.yaml
+yarn.lock
+package-lock.json
