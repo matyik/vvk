@@ -155,3 +155,31 @@ MIT License - see LICENSE file for details
 ## **Contributing**
 
 Contributions are welcome! Please feel free to submit a Pull Request.
+
+## **Using with Ollama**
+
+VVK can use [Ollama](https://ollama.ai/) as an alternative to OpenAI's API for generating commands.
+
+### Setup Ollama
+
+1. Install Ollama from [ollama.ai](https://ollama.ai/)
+2. Start the Ollama service
+3. Pull your preferred model:
+   ```bash
+   ollama pull llama3
+   ```
+
+### Configure VVK to use Ollama
+
+```bash
+# Enable Ollama
+vvk config set useOllama true
+
+# Set Ollama host (default is http://localhost:11434)
+vvk config set ollamaHost http://localhost:11434
+
+# Set Ollama model (default is llama3)
+vvk config set ollamaModel llama3
+```
+
+When Ollama is enabled, VVK will use it instead of OpenAI or VVK Cloud for generating commands.

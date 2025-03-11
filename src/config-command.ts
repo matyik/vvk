@@ -12,7 +12,7 @@ export function configCommand(args: string[]) {
     }
     // For boolean fields, parse the value
     let parsedValue: string | boolean = value;
-    if (key === 'confirmCommand') {
+    if (key === 'confirmCommand' || key === 'useOllama') {
       parsedValue = value.toLowerCase() === 'true' || value.toLowerCase() === 'y';
     }
     const updated = updateConfig({ [key]: parsedValue });
@@ -28,9 +28,14 @@ export function configCommand(args: string[]) {
     console.log('Current configuration:', config);
   } else if (command === 'remove' || command === 'rm') {
     // set key to an empty string
-
     const key = args[2] as keyof Config;
-    if (key === 'confirmCommand' || key === 'defaultConfirmation') {
+    if (
+      key === 'confirmCommand' ||
+      key === 'defaultConfirmation' ||
+      key === 'useOllama' ||
+      key === 'ollamaHost' ||
+      key === 'ollamaModel'
+    ) {
       console.error(`Cannot remove ${key}`);
       process.exit(1);
     }
