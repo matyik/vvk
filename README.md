@@ -84,9 +84,15 @@ You can check your current settings with:
 vvk config list
 ```
 
+Use `vvk config remove` to remove/reset a configuration option:
+
+```bash
+vvk config remove <key>
+```
+
 ## **Login**
 
-If using VVK Cloud, use the `vvk login` command to log in through the browser
+If using VVK Cloud, use the `vvk login` command to log in through the browser. If you have an OpenAI API key set, vvk will default to that. Use `vvk config remove openaiApiKey` to remove it.
 
 ```bash
 # Sets the key and userId values
